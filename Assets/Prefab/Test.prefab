@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 462494898116209809}
   - component: {fileID: 3316317075343620218}
   - component: {fileID: 4120403347551156011}
+  - component: {fileID: 9052535725537807685}
   m_Layer: 0
   m_Name: Test
   m_TagString: Player
@@ -242,6 +243,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 462494898116209809}
   - {fileID: 4120403347551156011}
+  - {fileID: 9052535725537807685}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &462494898116209809
 MonoBehaviour:
@@ -305,3 +307,16 @@ MonoBehaviour:
   camManager: {fileID: 0}
   _PathBuffer: []
   _PathIndex: 0
+--- !u!114 &9052535725537807685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8146875889968868105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb46f515f38854459aa44aebdbf05e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PlayerId: 0

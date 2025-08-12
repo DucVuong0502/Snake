@@ -56,7 +56,7 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "SnakePhoton.sln",
+    "dotnet.defaultSolution": "Snake.sln",
     "editor.formatOnSave": true,
     "files.autoSave": "onFocusChange"
 }

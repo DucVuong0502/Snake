@@ -48,4 +48,5 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             camManager.SetTarget(playerObj.transform);
         }
     }
+
 }

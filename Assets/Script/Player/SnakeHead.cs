@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Fusion;
 
@@ -12,20 +13,32 @@ public class SnakeHead3D : NetworkBehaviour
     [Header("Body")]
     public GameObject bodyPrefab;
     public float bodySpacing;
+    public bool canMove = false;
 
-    [HideInInspector]
-    public CameraManager camManager; // Nếu dùng camera switch
+    [HideInInspector] public CameraManager camManager; // Nếu dùng camera switch
 
     private List<Transform> bodyParts = new List<Transform>();
 
     [Networked, Capacity(512)] public NetworkArray<Vector3> PathBuffer { get; }
     [Networked] public int PathIndex { get; set; }
 
+    // Điểm của player (đồng bộ qua mạng)
+    [Networked] public int Score { get; set; }
+
     private Vector3 moveDirection;
 
     public override void Spawned()
     {
         moveDirection = transform.forward;
+
+        // Đăng ký player vào leaderboard
+        LeaderboardManager.Instance?.RegisterPlayer(this);
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        // Xoá khỏi leaderboard khi thoát
+        LeaderboardManager.Instance?.UnregisterPlayer(this);
     }
 
     public override void FixedUpdateNetwork()
@@ -33,6 +46,7 @@ public class SnakeHead3D : NetworkBehaviour
         if (!Object.HasInputAuthority) return;
 
         // Điều khiển
+        if (canMove == false) return;
         if (camManager == null || camManager.steeringModeLocal == 1)
         {
             HandleSteeringInput();
@@ -101,6 +115,12 @@ public class SnakeHead3D : NetworkBehaviour
     public void RPC_AddBodyPart(NetworkId who)
     {
         if (Object.Id != who) return;
+
+        // Cộng điểm khi ăn
+        if (Object.HasStateAuthority)
+        {
+            Score += 10;
+        }
 
         Vector3 spawnPos = bodyParts.Count == 0
             ? transform.position - transform.forward * bodySpacing
